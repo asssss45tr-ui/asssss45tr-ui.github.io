@@ -13,14 +13,15 @@
             padding: 15px;
         }
         .container { 
-            max-width: 900px; 
+            max-width: 1000px; 
             margin: auto; 
             background: white; 
             padding: 20px; 
             border-radius: 20px; 
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
-        h1 { color: #333; margin-bottom: 20px; text-align: center; }
+        h1 { color: #333; text-align: center; margin-bottom: 5px; }
+        .subtitle { text-align: center; color: #888; font-size: 14px; margin-bottom: 20px; }
         .tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
         .tabs button { 
             flex: 1; 
@@ -36,9 +37,8 @@
         .tabs button.active { background: #667eea; color: white; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-
         .input-group { margin: 12px 0; }
-        .input-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; }
+        .input-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; font-size: 14px; }
         .input-group input { 
             width: 100%; 
             padding: 12px; 
@@ -47,8 +47,7 @@
             font-size: 16px;
         }
         .input-group input:focus { border-color: #667eea; outline: none; }
-
-        button { 
+        .btn { 
             padding: 12px 25px; 
             border: none; 
             border-radius: 10px; 
@@ -58,36 +57,48 @@
             transition: 0.3s;
             margin: 5px;
         }
-        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .btn-success { background: #27ae60; color: white; }
         .btn-danger { background: #e74c3c; color: white; }
         .btn-warning { background: #f39c12; color: white; }
         .btn-primary { background: #3498db; color: white; }
         .btn-info { background: #1abc9c; color: white; }
-
+        .btn-slate { background: #95a5a6; color: white; }
+        .btn-purple { background: #8e44ad; color: white; }
+        .flex { display: flex; gap: 10px; flex-wrap: wrap; }
         .product-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
             gap: 15px; 
             margin: 20px 0; 
         }
         .product-item { 
             background: white; 
             padding: 15px; 
-            border-radius: 10px; 
+            border-radius: 12px; 
             box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
             border: 1px solid #eee;
+            transition: 0.3s;
+            text-align: center;
         }
+        .product-item:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
         .product-item .barcode { 
             background: #f0f0f0; 
-            padding: 5px 10px; 
+            padding: 4px 10px; 
             border-radius: 5px; 
             font-size: 12px; 
             direction: ltr; 
             font-family: monospace;
+            display: inline-block;
+            margin: 5px 0;
         }
-        .product-item .price { color: #27ae60; font-weight: bold; font-size: 18px; }
-
+        .product-item .price { 
+            color: #27ae60; 
+            font-weight: bold; 
+            font-size: 24px; 
+            margin: 8px 0;
+        }
+        .product-item .name { font-size: 18px; font-weight: bold; }
         .search-result { 
             background: #e8f5e9; 
             padding: 20px; 
@@ -97,7 +108,7 @@
             border-right: 5px solid #4caf50;
         }
         .search-result.show { display: block; }
-
+        .search-result .price-big { font-size: 32px; color: #27ae60; font-weight: bold; }
         .not-found { 
             background: #ffebee; 
             padding: 20px; 
@@ -109,7 +120,6 @@
             text-align: center;
         }
         .not-found.show { display: block; }
-
         .stats { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
@@ -125,72 +135,58 @@
         }
         .stat-box .number { font-size: 28px; font-weight: bold; color: #667eea; }
         .stat-box .label { color: #666; font-size: 14px; }
-
-        .flex { display: flex; gap: 10px; flex-wrap: wrap; }
-        .auto-scan-alert {
-            background: #d4edda;
-            border: 2px solid #28a745;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            text-align: center;
-            font-weight: bold;
-            color: #155724;
-            display: none;
-        }
-        .auto-scan-alert.show { display: block; }
-
+        .message { padding: 12px; border-radius: 10px; margin: 10px 0; font-weight: bold; display: none; }
+        .message.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; display: block; }
+        .message.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; display: block; }
+        .message.info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; display: block; }
+        .backup-box { background: #f8f9fa; border: 2px dashed #8e44ad; border-radius: 12px; padding: 15px; margin: 15px 0; }
         @media (max-width: 600px) { 
             .container { padding: 15px; } 
             .tabs button { font-size: 13px; padding: 8px; }
             .product-grid { grid-template-columns: 1fr; }
+            .search-result .price-big { font-size: 24px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🏪 سیستم مدیریت مغازه</h1>
+        <p class="subtitle">مدیریت ساده قیمت‌ها · با قابلیت پشتیبان‌گیری</p>
 
         <div class="tabs">
-            <button class="active" onclick="showTab('search')">🔍 جستجو/اسکن</button>
-            <button onclick="showTab('add')">➕ افزودن کالا</button>
-            <button onclick="showTab('list')">📋 لیست کالاها</button>
+            <button class="active" onclick="showTab('search')">🔍 جستجو</button>
+            <button onclick="showTab('add')">➕ افزودن</button>
+            <button onclick="showTab('list')">📋 لیست</button>
             <button onclick="showTab('stats')">📊 آمار</button>
         </div>
 
-        <!-- تب جستجو -->
+        <!-- ===== تب جستجو ===== -->
         <div id="tab-search" class="tab-content active">
-            <h2>🔍 جستجوی کالا با بارکد</h2>
-            
-            <div id="autoScanAlert" class="auto-scan-alert">
-                ✅ بارکد شناسایی شد! در حال جستجو...
-            </div>
-
+            <h2>🔍 جستجوی قیمت کالا</h2>
             <div class="input-group">
                 <label>📱 بارکد را اسکن یا وارد کنید</label>
                 <input type="text" id="searchBarcode" placeholder="بارکد را وارد کنید..." autofocus>
             </div>
-            <button class="btn-success" onclick="searchProduct()">🔍 جستجو</button>
-            <button class="btn-info" onclick="clearSearch()">🗑️ پاک کردن</button>
+            <button class="btn btn-success" onclick="searchProduct()">🔍 جستجو</button>
+            <button class="btn btn-slate" onclick="clearSearch()">🗑️ پاک کردن</button>
 
             <div id="searchResult" class="search-result">
                 <h3>✅ کالا پیدا شد!</h3>
                 <p><strong>📦 نام:</strong> <span id="sName"></span></p>
                 <p><strong>🔢 بارکد:</strong> <span id="sBarcode"></span></p>
-                <p><strong>💰 قیمت خرید:</strong> <span id="sBuyPrice"></span> تومان</p>
-                <p><strong>💲 قیمت فروش:</strong> <span id="sSellPrice"></span> تومان</p>
-                <p><strong>📊 موجودی:</strong> <span id="sStock"></span> عدد</p>
-                <p><strong>📅 تاریخ ثبت:</strong> <span id="sDate"></span></p>
+                <div class="price-big" id="sPrice">۰</div>
+                <p style="color:#888; font-size:13px;">قیمت فروش (تومان)</p>
+                <p style="font-size:12px; color:#999; margin-top:5px;">📅 <span id="sDate"></span></p>
             </div>
 
-            <div id="notFound" class="not-found">
-                ❌ کالایی با این بارکد یافت نشد!
-            </div>
+            <div id="notFound" class="not-found">❌ کالایی با این بارکد یافت نشد!</div>
         </div>
 
-        <!-- تب افزودن کالا -->
+        <!-- ===== تب افزودن کالا ===== -->
         <div id="tab-add" class="tab-content">
             <h2>➕ افزودن کالای جدید</h2>
+            <div id="addMessage" class="message"></div>
+            
             <div class="input-group">
                 <label>📦 نام کالا</label>
                 <input type="text" id="productName" placeholder="مثال: شیر پاستوریزه">
@@ -200,54 +196,66 @@
                 <input type="text" id="productBarcode" placeholder="مثال: 123456789">
             </div>
             <div class="input-group">
-                <label>💰 قیمت خرید (تومان)</label>
-                <input type="number" id="productBuyPrice" placeholder="مثال: 15000">
+                <label>💰 قیمت فروش (تومان)</label>
+                <input type="number" id="productPrice" placeholder="مثال: 25000">
             </div>
-            <div class="input-group">
-                <label>💲 قیمت فروش (تومان)</label>
-                <input type="number" id="productSellPrice" placeholder="مثال: 25000">
+            <div class="flex">
+                <button class="btn btn-success" onclick="saveProduct()">💾 ذخیره</button>
+                <button class="btn btn-warning" onclick="clearForm()">🗑️ پاک کردن</button>
             </div>
-            <div class="input-group">
-                <label>📊 موجودی</label>
-                <input type="number" id="productStock" placeholder="مثال: 10" value="0">
-            </div>
-            <button class="btn-success" onclick="addProduct()">✅ ثبت کالا</button>
-            <button class="btn-warning" onclick="clearForm()">🗑️ پاک کردن</button>
-            <div id="addMessage" style="margin-top:15px;font-weight:bold;"></div>
         </div>
 
-        <!-- تب لیست کالاها -->
+        <!-- ===== تب لیست کالاها ===== -->
         <div id="tab-list" class="tab-content">
             <h2>📋 لیست کالاها</h2>
             <div class="input-group">
-                <input type="text" id="searchList" placeholder="🔍 جستجو در لیست..." oninput="renderProductList()">
+                <input type="text" id="searchList" placeholder="🔍 جستجو در لیست (نام یا بارکد)..." oninput="renderProductList()">
+            </div>
+            <div class="flex" style="margin:10px 0;">
+                <button class="btn btn-success" onclick="exportExcel()" style="flex:1;">📊 خروجی اکسل</button>
+                <button class="btn btn-danger" onclick="clearAll()" style="flex:1;">🗑️ حذف همه</button>
             </div>
             <div id="productList" class="product-grid"></div>
         </div>
 
-        <!-- تب آمار -->
+        <!-- ===== تب آمار ===== -->
         <div id="tab-stats" class="tab-content">
-            <h2>📊 آمار مغازه</h2>
+            <h2>📊 آمار و پشتیبان‌گیری</h2>
+            
             <div class="stats">
                 <div class="stat-box">
                     <div class="number" id="totalProducts">0</div>
-                    <div class="label">تعداد کل کالاها</div>
-                </div>
-                <div class="stat-box">
-                    <div class="number" id="totalStock">0</div>
-                    <div class="label">مجموع موجودی</div>
+                    <div class="label">تعداد کالاها</div>
                 </div>
                 <div class="stat-box">
                     <div class="number" id="avgPrice">0</div>
-                    <div class="label">میانگین قیمت فروش</div>
+                    <div class="label">میانگین قیمت</div>
                 </div>
                 <div class="stat-box">
-                    <div class="number" id="totalValue">0</div>
-                    <div class="label">ارزش کل موجودی</div>
+                    <div class="number" id="minPrice">0</div>
+                    <div class="label">ارزان‌ترین</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number" id="maxPrice">0</div>
+                    <div class="label">گران‌ترین</div>
                 </div>
             </div>
-            <button class="btn-primary" onclick="exportData()">📤 خروجی اکسل</button>
-            <button class="btn-danger" onclick="clearAllData()">🗑️ حذف همه</button>
+
+            <!-- ===== بخش پشتیبان‌گیری ===== -->
+            <div class="backup-box">
+                <h3 style="color:#8e44ad; margin-bottom:10px;">💾 پشتیبان‌گیری از داده‌ها</h3>
+                <p style="font-size:13px; color:#666; margin-bottom:12px;">
+                    با این دو دکمه، می‌تونید از کل اطلاعات مغازه‌تان پشتیبان بگیرید و در صورت نیاز بازیابی کنید.
+                </p>
+                <div class="flex">
+                    <button class="btn btn-purple" onclick="backupData()" style="flex:1;">📤 دریافت پشتیبان</button>
+                    <button class="btn btn-primary" onclick="document.getElementById('restoreInput').click()" style="flex:1;">📥 بازیابی از فایل</button>
+                    <input type="file" id="restoreInput" accept=".json" style="display:none;" onchange="restoreData(event)">
+                </div>
+                <div id="backupMessage" class="message" style="margin-top:10px;"></div>
+            </div>
+
+            <button class="btn btn-success" onclick="exportExcel()" style="width:100%;">📤 خروجی اکسل کامل</button>
         </div>
     </div>
 
@@ -256,31 +264,36 @@
         let products = JSON.parse(localStorage.getItem('shopProducts')) || [];
         let editingIndex = -1;
 
+        // ========== ذخیره‌سازی ==========
         function saveProducts() {
             localStorage.setItem('shopProducts', JSON.stringify(products));
             updateStats();
+            renderProductList();
         }
 
+        // ========== نمایش تب ==========
         function showTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tabs button').forEach(el => el.classList.remove('active'));
             document.getElementById(`tab-${tabName}`).classList.add('active');
+            
             document.querySelectorAll('.tabs button').forEach(btn => {
-                if (btn.textContent.includes(tabName === 'search' ? 'جستجو' : 
-                    tabName === 'add' ? 'افزودن' :
-                    tabName === 'list' ? 'لیست' : 'آمار')) {
+                const map = { search: 'جستجو', add: 'افزودن', list: 'لیست', stats: 'آمار' };
+                if (btn.textContent.includes(map[tabName])) {
                     btn.classList.add('active');
                 }
             });
+            
             if (tabName === 'list') renderProductList();
             if (tabName === 'stats') updateStats();
             if (tabName === 'search') document.getElementById('searchBarcode').focus();
         }
 
+        // ========== جستجو ==========
         function searchProduct() {
             const barcode = document.getElementById('searchBarcode').value.trim();
             if (!barcode) {
-                alert('لطفاً بارکد را وارد کنید!');
+                showMessage('search', '❌ لطفاً بارکد را وارد کنید!', 'error');
                 return;
             }
 
@@ -291,9 +304,7 @@
             if (product) {
                 document.getElementById('sName').textContent = product.name;
                 document.getElementById('sBarcode').textContent = product.barcode;
-                document.getElementById('sBuyPrice').textContent = product.buyPrice.toLocaleString();
-                document.getElementById('sSellPrice').textContent = product.sellPrice.toLocaleString();
-                document.getElementById('sStock').textContent = product.stock;
+                document.getElementById('sPrice').textContent = product.price.toLocaleString();
                 document.getElementById('sDate').textContent = product.date || '---';
                 resultDiv.classList.add('show');
                 notFoundDiv.classList.remove('show');
@@ -307,60 +318,76 @@
             document.getElementById('searchBarcode').value = '';
             document.getElementById('searchResult').classList.remove('show');
             document.getElementById('notFound').classList.remove('show');
-            document.getElementById('autoScanAlert').classList.remove('show');
             document.getElementById('searchBarcode').focus();
         }
 
-        function addProduct() {
+        // ========== افزودن/ویرایش کالا ==========
+        function saveProduct() {
             const name = document.getElementById('productName').value.trim();
             const barcode = document.getElementById('productBarcode').value.trim();
-            const buyPrice = parseInt(document.getElementById('productBuyPrice').value);
-            const sellPrice = parseInt(document.getElementById('productSellPrice').value);
-            const stock = parseInt(document.getElementById('productStock').value) || 0;
+            const price = parseInt(document.getElementById('productPrice').value);
 
-            if (!name || !barcode || !buyPrice || !sellPrice) {
-                alert('❌ لطفاً همه فیلدها را پر کنید!');
+            if (!name || !barcode || !price) {
+                showMessage('add', '❌ لطفاً همه فیلدها را پر کنید!', 'error');
                 return;
             }
 
             const duplicate = products.find((p, i) => p.barcode === barcode && i !== editingIndex);
             if (duplicate) {
-                alert('❌ این بارکد قبلاً ثبت شده است!');
+                showMessage('add', '❌ این بارکد قبلاً ثبت شده است!', 'error');
                 return;
             }
 
-            const messageDiv = document.getElementById('addMessage');
-            
             if (editingIndex === -1) {
-                products.push({ name, barcode, buyPrice, sellPrice, stock, date: new Date().toLocaleDateString('fa-IR') });
-                messageDiv.innerHTML = '✅ کالا با موفقیت ثبت شد!';
-                messageDiv.style.color = '#27ae60';
+                products.push({ 
+                    name, 
+                    barcode, 
+                    price,
+                    date: new Date().toLocaleDateString('fa-IR')
+                });
+                showMessage('add', '✅ کالا با موفقیت ثبت شد!', 'success');
             } else {
-                products[editingIndex] = { ...products[editingIndex], name, barcode, buyPrice, sellPrice, stock };
-                messageDiv.innerHTML = '✅ کالا با موفقیت ویرایش شد!';
-                messageDiv.style.color = '#3498db';
+                products[editingIndex] = { 
+                    ...products[editingIndex],
+                    name, 
+                    barcode, 
+                    price
+                };
+                showMessage('add', '✅ کالا با موفقیت ویرایش شد!', 'info');
                 editingIndex = -1;
             }
 
             saveProducts();
             clearForm();
-            renderProductList();
         }
 
         function clearForm() {
             document.getElementById('productName').value = '';
             document.getElementById('productBarcode').value = '';
-            document.getElementById('productBuyPrice').value = '';
-            document.getElementById('productSellPrice').value = '';
-            document.getElementById('productStock').value = '0';
-            document.getElementById('addMessage').innerHTML = '';
+            document.getElementById('productPrice').value = '';
+            document.getElementById('addMessage').className = 'message';
             editingIndex = -1;
         }
 
+        function showMessage(tab, text, type) {
+            const el = document.getElementById(tab === 'search' ? 'searchResult' : 'addMessage');
+            if (!el) return;
+            el.textContent = text;
+            el.className = `message ${type}`;
+            setTimeout(() => { 
+                el.className = 'message'; 
+                if (tab === 'add') document.getElementById('addMessage').className = 'message';
+            }, 3000);
+        }
+
+        // ========== لیست کالاها ==========
         function renderProductList() {
             const search = document.getElementById('searchList').value.toLowerCase();
             const list = document.getElementById('productList');
-            const filtered = products.filter(p => p.name.includes(search) || p.barcode.includes(search));
+            const filtered = products.filter(p => 
+                p.name.includes(search) || 
+                p.barcode.includes(search)
+            );
 
             if (filtered.length === 0) {
                 list.innerHTML = '<p style="text-align:center;color:#999;grid-column:1/-1;">هیچ کالایی یافت نشد</p>';
@@ -371,14 +398,13 @@
                 const realIndex = products.indexOf(p);
                 return `
                     <div class="product-item">
-                        <strong>${p.name}</strong>
+                        <div class="name">${p.name}</div>
                         <div class="barcode">🔢 ${p.barcode}</div>
-                        <div>خرید: ${p.buyPrice.toLocaleString()} تومان</div>
-                        <div class="price">فروش: ${p.sellPrice.toLocaleString()} تومان</div>
-                        <div>موجودی: ${p.stock} عدد</div>
+                        <div class="price">${p.price.toLocaleString()} تومان</div>
+                        <div style="font-size:11px; color:#999;">${p.date || '---'}</div>
                         <div style="margin-top:10px;display:flex;gap:5px;flex-wrap:wrap;">
-                            <button class="btn-primary" onclick="editProduct(${realIndex})" style="padding:5px 12px;font-size:13px;">✏️</button>
-                            <button class="btn-danger" onclick="deleteProduct(${realIndex})" style="padding:5px 12px;font-size:13px;">🗑️</button>
+                            <button class="btn btn-primary" onclick="editProduct(${realIndex})" style="padding:5px 12px;font-size:13px;flex:1;">✏️ ویرایش</button>
+                            <button class="btn btn-danger" onclick="deleteProduct(${realIndex})" style="padding:5px 12px;font-size:13px;flex:1;">🗑️ حذف</button>
                         </div>
                     </div>
                 `;
@@ -389,122 +415,156 @@
             const p = products[index];
             document.getElementById('productName').value = p.name;
             document.getElementById('productBarcode').value = p.barcode;
-            document.getElementById('productBuyPrice').value = p.buyPrice;
-            document.getElementById('productSellPrice').value = p.sellPrice;
-            document.getElementById('productStock').value = p.stock;
+            document.getElementById('productPrice').value = p.price;
             editingIndex = index;
             showTab('add');
-            document.getElementById('addMessage').innerHTML = '✏️ در حال ویرایش کالا...';
-            document.getElementById('addMessage').style.color = '#f39c12';
+            const msg = document.getElementById('addMessage');
+            msg.textContent = '✏️ در حال ویرایش کالا...';
+            msg.className = 'message info';
         }
 
         function deleteProduct(index) {
-            if (confirm(`آیا از حذف "${products[index].name}" مطمئن هستید؟`)) {
+            if (confirm(`❌ آیا از حذف "${products[index].name}" مطمئن هستید؟`)) {
                 products.splice(index, 1);
                 saveProducts();
-                renderProductList();
-                updateStats();
             }
         }
 
+        // ========== آمار ==========
         function updateStats() {
-            document.getElementById('totalProducts').textContent = products.length;
-            const totalStock = products.reduce((sum, p) => sum + p.stock, 0);
-            document.getElementById('totalStock').textContent = totalStock;
-            const avgPrice = products.length > 0 ? Math.round(products.reduce((sum, p) => sum + p.sellPrice, 0) / products.length) : 0;
-            document.getElementById('avgPrice').textContent = avgPrice.toLocaleString();
-            const totalValue = products.reduce((sum, p) => sum + (p.sellPrice * p.stock), 0);
-            document.getElementById('totalValue').textContent = totalValue.toLocaleString();
-        }
-
-        function exportData() {
-            if (products.length === 0) {
-                alert('هیچ کالایی برای خروجی وجود ندارد!');
+            const count = products.length;
+            document.getElementById('totalProducts').textContent = count;
+            
+            if (count === 0) {
+                document.getElementById('avgPrice').textContent = '۰';
+                document.getElementById('minPrice').textContent = '۰';
+                document.getElementById('maxPrice').textContent = '۰';
                 return;
             }
-            let csv = 'ردیف,نام کالا,بارکد,قیمت خرید,قیمت فروش,موجودی,تاریخ ثبت\n';
+
+            const prices = products.map(p => p.price);
+            const avg = Math.round(prices.reduce((a, b) => a + b, 0) / count);
+            const min = Math.min(...prices);
+            const max = Math.max(...prices);
+            
+            document.getElementById('avgPrice').textContent = avg.toLocaleString();
+            document.getElementById('minPrice').textContent = min.toLocaleString();
+            document.getElementById('maxPrice').textContent = max.toLocaleString();
+        }
+
+        // ========== خروجی اکسل ==========
+        function exportExcel() {
+            if (products.length === 0) {
+                alert('❌ هیچ کالایی برای خروجی وجود ندارد!');
+                return;
+            }
+            let csv = 'ردیف,نام کالا,بارکد,قیمت فروش,تاریخ ثبت\n';
             products.forEach((p, i) => {
-                csv += `${i+1},${p.name},${p.barcode},${p.buyPrice},${p.sellPrice},${p.stock},${p.date || '---'}\n`;
+                csv += `${i+1},${p.name},${p.barcode},${p.price},${p.date || '---'}\n`;
             });
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `لیست_کالاها_${new Date().toLocaleDateString('fa-IR')}.csv`;
+            link.download = `لیست_قیمت‌ها_${new Date().toLocaleDateString('fa-IR')}.csv`;
             link.click();
             URL.revokeObjectURL(link.href);
         }
 
-        function clearAllData() {
+        // ========== پشتیبان‌گیری ==========
+        function backupData() {
             if (products.length === 0) {
-                alert('دیتابیس خالی است!');
+                showBackupMessage('⚠️ هیچ داده‌ای برای پشتیبان‌گیری وجود ندارد!', 'error');
+                return;
+            }
+            
+            const data = {
+                version: '1.0',
+                date: new Date().toISOString(),
+                count: products.length,
+                products: products
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `پشتیبان_قیمت‌ها_${new Date().toLocaleDateString('fa-IR').replace(/[\/]/g, '-')}.json`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+            
+            showBackupMessage(`✅ پشتیبان از ${products.length} کالا با موفقیت دریافت شد!`, 'success');
+        }
+
+        function restoreData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    if (!data.products || !Array.isArray(data.products)) {
+                        showBackupMessage('❌ فایل پشتیبان نامعتبر است!', 'error');
+                        return;
+                    }
+                    
+                    if (products.length > 0) {
+                        if (!confirm(`⚠️ در حال حاضر ${products.length} کالا در سیستم دارید. آیا می‌خواهید همه را با فایل پشتیبان (${data.products.length} کالا) جایگزین کنید؟`)) {
+                            return;
+                        }
+                    }
+                    
+                    products = data.products;
+                    saveProducts();
+                    showBackupMessage(`✅ ${products.length} کالا با موفقیت بازیابی شد!`, 'success');
+                    
+                } catch(err) {
+                    showBackupMessage('❌ خطا در خواندن فایل: ' + err.message, 'error');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function showBackupMessage(text, type) {
+            const el = document.getElementById('backupMessage');
+            el.textContent = text;
+            el.className = `message ${type}`;
+            setTimeout(() => { el.className = 'message'; }, 4000);
+        }
+
+        // ========== حذف همه ==========
+        function clearAll() {
+            if (products.length === 0) {
+                alert('📭 دیتابیس خالی است!');
                 return;
             }
             if (confirm(`⚠️ آیا از حذف همه ${products.length} کالا مطمئن هستید؟`)) {
                 if (confirm('⚠️ هشدار نهایی: این عمل غیرقابل بازگشت است!')) {
                     products = [];
                     saveProducts();
-                    renderProductList();
-                    updateStats();
                     clearSearch();
                     alert('✅ همه کالاها حذف شدند');
                 }
             }
         }
 
+        // ========== کلید Enter برای جستجو ==========
         document.getElementById('searchBarcode').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') searchProduct();
         });
 
-        // ========== دریافت بارکد از URL ==========
-        function getBarcodeFromURL() {
-            // روش 1: پارامترهای URL
-            let params = new URLSearchParams(window.location.search);
-            let barcode = params.get('barcode') || params.get('code') || params.get('id');
-            
-            // روش 2: از hash (#)
-            if (!barcode && window.location.hash) {
-                barcode = window.location.hash.replace('#', '');
-            }
-            
-            // روش 3: از مسیر URL
-            if (!barcode) {
-                const path = window.location.pathname;
-                const match = path.match(/\/(\d+)/);
-                if (match) barcode = match[1];
-            }
-            
-            // روش 4: از localStorage (برای مواقعی که قبلاً اسکن شده)
-            if (!barcode) {
-                barcode = localStorage.getItem('lastScannedBarcode');
-            }
-            
-            return barcode;
-        }
-
-        // ========== اجرا هنگام لود ==========
+        // ========== دریافت خودکار از URL (برای اسکنر) ==========
         window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const barcode = params.get('barcode');
+            if (barcode) {
+                document.getElementById('searchBarcode').value = barcode;
+                searchProduct();
+                showTab('search');
+            }
             renderProductList();
             updateStats();
-
-            const barcode = getBarcodeFromURL();
-            
-            if (barcode) {
-                // ذخیره برای دفعه بعد
-                localStorage.setItem('lastScannedBarcode', barcode);
-                
-                const alertDiv = document.getElementById('autoScanAlert');
-                alertDiv.textContent = `✅ بارکد "${barcode}" شناسایی شد! در حال جستجو...`;
-                alertDiv.classList.add('show');
-                
-                document.getElementById('searchBarcode').value = barcode;
-                
-                setTimeout(() => {
-                    searchProduct();
-                    setTimeout(() => {
-                        alertDiv.classList.remove('show');
-                    }, 2000);
-                }, 300);
-            }
         };
     </script>
 </body>
