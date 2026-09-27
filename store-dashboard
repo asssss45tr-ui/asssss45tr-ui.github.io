@@ -1,1 +1,110 @@
-index.html
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="theme-color" content="#0d9488"/>
+<title>داشبورد فروشگاه</title>
+<style>
+:root{--bg:#f0f4f3;--surface:#fff;--ink:#14201e;--muted:#5c6f6b;--line:#e2ebe8;--accent:#0d9488;--accent-dark:#0f766e;--success:#059669;--danger:#dc2626;--shadow:0 1px 3px rgb(20 32 30/.05),0 12px 32px rgb(20 32 30/.07)}
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 16px 48px}
+.hero{background:linear-gradient(135deg,#0f766e,#14b8a6);color:#f0fdfa;border-radius:24px;padding:28px 24px;box-shadow:0 16px 40px rgb(13 148 136/.28);display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+.hero h1{margin:0;font-size:1.5rem}.hero p{margin:6px 0 0;opacity:.9;font-size:.9rem}
+.hero-actions{display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:0 16px;border:0;border-radius:12px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;color:inherit}
+.btn-primary{background:#fff;color:var(--accent-dark)}.btn-ghost{background:rgb(255 255 255/.18);color:#fff;border:1px solid rgb(255 255 255/.25)}.btn-soft{background:#ccfbf1;color:var(--accent-dark)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}@media(max-width:800px){.grid{grid-template-columns:1fr 1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:16px}
+.stat-label{font-size:12px;color:var(--muted)}.stat-value{font-size:22px;font-weight:800;margin-top:4px;font-variant-numeric:tabular-nums}.stat-hint{font-size:11px;color:#8a9b97;margin-top:4px}
+.section{margin-top:22px}.section h2{margin:0 0 12px;font-size:1.1rem}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--line)}th{background:#f7faf9;color:var(--muted)}tr:hover td{background:#f0fdfa}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700}.badge-ok{background:#d1fae5;color:var(--success)}.badge-off{background:#fee2e2;color:var(--danger)}
+.muted{color:var(--muted)}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.input{min-height:40px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:13px}
+.empty{text-align:center;padding:40px 16px;color:var(--muted)}
+.tabs{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.tab{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:600;font-size:13px}
+.tab.active{background:#ccfbf1;border-color:transparent;color:var(--accent-dark)}
+.panel{display:none}.panel.active{display:block}
+footer{margin-top:28px;text-align:center;font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1 id="storeTitle">داشبورد فروشگاه</h1>
+      <p id="storeSub">فایل پشتیبان JSON اپ را بارگذاری کنید یا از ابر همگام‌سازی بگیرید</p>
+    </div>
+    <div class="hero-actions">
+      <label class="btn btn-primary">بارگذاری JSON<input id="file" type="file" accept="application/json,.json" hidden/></label>
+      <button class="btn btn-ghost" id="btnCloud">دریافت از Pantry</button>
+      <button class="btn btn-ghost" id="btnDemo">داده نمونه</button>
+    </div>
+  </div>
+  <div class="grid" id="stats"></div>
+  <div class="tabs">
+    <button class="tab active" data-tab="charts">نمودارها</button>
+    <button class="tab" data-tab="sales">فاکتورها</button>
+    <button class="tab" data-tab="products">کالاها</button>
+    <button class="tab" data-tab="setup">تنظیمات ابر</button>
+  </div>
+  <div class="panel active section" id="panel-charts">
+    <div class="card"><h2 style="margin:0 0 8px;font-size:15px">فروش ۷ روز</h2><div id="chartWeek"></div></div>
+    <div class="card" style="margin-top:12px"><h2 style="margin:0 0 8px;font-size:15px">سود تقریبی ۷ روز</h2><div id="chartProfit"></div></div>
+    <div class="card" style="margin-top:12px"><h2 style="margin:0 0 8px;font-size:15px">فروش ۶ ماه</h2><div id="chartMonths"></div></div>
+  </div>
+  <div class="panel section" id="panel-sales">
+    <div class="card">
+      <input class="input" id="saleQ" placeholder="جستجوی فاکتور / مشتری" style="width:100%;margin-bottom:12px"/>
+      <div class="table-wrap"><table><thead><tr><th>شماره</th><th>مشتری</th><th>تاریخ</th><th>مبلغ</th><th>وضعیت</th></tr></thead><tbody id="salesBody"></tbody></table></div>
+    </div>
+  </div>
+  <div class="panel section" id="panel-products">
+    <div class="card table-wrap"><table><thead><tr><th>نام</th><th>کد</th><th>موجودی</th><th>قیمت فروش</th></tr></thead><tbody id="prodBody"></tbody></table></div>
+  </div>
+  <div class="panel section" id="panel-setup">
+    <div class="card" style="display:flex;flex-direction:column;gap:12px">
+      <label>کد فروشگاه<input class="input" id="storeId" dir="ltr" style="width:100%;margin-top:6px"/></label>
+      <label>Pantry ID<input class="input" id="pantryId" dir="ltr" style="width:100%;margin-top:6px"/></label>
+      <button class="btn btn-soft" id="saveSetup" style="align-self:flex-start">ذخیره و دریافت</button>
+      <p class="muted" style="font-size:12px;margin:0">از اپ مدیر فایل JSON پشتیبان بگیرید و اینجا بارگذاری کنید، یا Pantry را تنظیم کنید.</p>
+    </div>
+  </div>
+  <footer>داشبورد آنلاین · داده فقط در مرورگر شما پردازش می‌شود</footer>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+let db=null;
+function toman(n){n=Math.round(Number(n)||0);return n.toLocaleString("fa-IR")+" تومان"}
+function toFa(n){return Number(n||0).toLocaleString("fa-IR")}
+function todayKey(d=new Date()){return d.toISOString().slice(0,10)}
+function monthKey(d=new Date()){return d.toISOString().slice(0,7)}
+function faDate(iso){try{return new Date(iso).toLocaleString("fa-IR")}catch{return iso||""}}
+function completedSales(){return (db.sales||[]).filter(s=>s.status==="COMPLETED")}
+function saleCost(s){let c=0;for(const l of(s.items||[])){const p=(db.products||[]).find(x=>x.id===l.productId||x.productCode===l.code);c+=(p?p.purchasePrice:0)*(l.qty||0)}return c}
+function metrics(fromKey,toKey){const sales=completedSales().filter(s=>{const d=(s.createdAt||"").slice(0,10);return d>=fromKey&&d<=toKey});const revenue=sales.reduce((a,s)=>a+(s.total||0),0);const cost=sales.reduce((a,s)=>a+saleCost(s),0);return{revenue,profit:revenue-cost,count:sales.length}}
+function barChart(el,labels,values,color){const max=Math.max(...values.map(v=>Math.abs(v)),1);const w=640,h=160,padT=20,padB=28,padL=10,padR=10;const n=values.length,gap=8,barW=Math.max(12,(w-padL-padR-gap*(n-1))/n);const gid="g"+Math.random().toString(36).slice(2,6);let bars=`<defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${color}"/><stop offset="100%" stop-color="${color}" stop-opacity=".5"/></linearGradient></defs>`;for(let g=0;g<4;g++){const gy=padT+((h-padT-padB)*g)/3;bars+=`<line x1="${padL}" y1="${gy}" x2="${w-padR}" y2="${gy}" stroke="#e2ebe8"/>`}values.forEach((v,i)=>{const bh=Math.round((Math.abs(v)/max)*(h-padT-padB));const x=padL+i*(barW+gap),y=h-padB-bh;bars+=`<rect x="${x}" y="${y}" width="${barW}" height="${Math.max(3,bh)}" rx="6" fill="url(#${gid})"/>`;if(v>0){const lab=v>=1e6?(v/1e6).toFixed(1)+"م":v>=1000?Math.round(v/1000)+"ه":Math.round(v);bars+=`<text x="${x+barW/2}" y="${y-4}" text-anchor="middle" font-size="10" font-weight="700" fill="#0f766e">${lab}</text>`}bars+=`<text x="${x+barW/2}" y="${h-8}" text-anchor="middle" font-size="11" fill="#5c6f6b">${labels[i]}</text>`});el.innerHTML=`<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}">${bars}</svg>`}
+function renderAll(){if(!db){$("#stats").innerHTML=`<div class="card empty" style="grid-column:1/-1">هنوز داده‌ای بارگذاری نشده</div>`;return}
+const name=(db.settings&&db.settings.storeName)||"فروشگاه";$("#storeTitle").textContent=name;$("#storeSub").textContent=`کد: ${(db.settings&&db.settings.storeId)||"—"} · ${toFa((db.products||[]).length)} کالا · ${toFa((db.sales||[]).length)} فاکتور`;
+const now=new Date(),today=todayKey(now),weekStart=todayKey(new Date(now-6*864e5)),month=monthKey(now),year=String(now.getFullYear());
+const d=metrics(today,today),w=metrics(weekStart,today),m=metrics(month+"-01",today),y=metrics(year+"-01-01",today);
+$("#stats").innerHTML=`<div class="card"><div class="stat-label">فروش امروز</div><div class="stat-value">${toman(d.revenue)}</div><div class="stat-hint">سود ${toman(d.profit)}</div></div><div class="card"><div class="stat-label">۷ روز</div><div class="stat-value">${toman(w.revenue)}</div><div class="stat-hint">سود ${toman(w.profit)}</div></div><div class="card"><div class="stat-label">این ماه</div><div class="stat-value">${toman(m.revenue)}</div><div class="stat-hint">سود ${toman(m.profit)}</div></div><div class="card"><div class="stat-label">امسال</div><div class="stat-value">${toman(y.revenue)}</div><div class="stat-hint">سود ${toman(y.profit)}</div></div>`;
+const dayLabels=[],daySales=[],dayProfit=[];for(let i=6;i>=0;i--){const dt=new Date(now-i*864e5),k=todayKey(dt);dayLabels.push(k.slice(5));const mm=metrics(k,k);daySales.push(mm.revenue);dayProfit.push(Math.max(0,mm.profit))}
+barChart($("#chartWeek"),dayLabels,daySales,"#0d9488");barChart($("#chartProfit"),dayLabels,dayProfit,"#059669");
+const monthLabels=[],monthSales=[];for(let i=5;i>=0;i--){const dt=new Date(now.getFullYear(),now.getMonth()-i,1),mk=monthKey(dt),last=new Date(dt.getFullYear(),dt.getMonth()+1,0),to=todayKey(last);monthLabels.push(mk.slice(5)||mk);monthSales.push(metrics(mk+"-01",to<today?to:today).revenue)}
+barChart($("#chartMonths"),monthLabels,monthSales,"#14b8a6");renderSales();renderProducts()}
+function renderSales(){const q=($("#saleQ").value||"").trim();let rows=[...(db.sales||[])].reverse();if(q)rows=rows.filter(s=>(s.docNumber||"").includes(q)||(s.customerName||"").includes(q));
+$("#salesBody").innerHTML=rows.length?rows.map(s=>`<tr><td><b>${s.docNumber||""}</b></td><td>${s.customerName||"—"}</td><td class="muted">${faDate(s.createdAt)}</td><td><b>${toman(s.total)}</b></td><td><span class="badge ${s.status==="CANCELLED"?"badge-off":"badge-ok"}">${s.status==="CANCELLED"?"لغو":"نهایی"}</span></td></tr>`).join(""):`<tr><td colspan="5" class="empty">فاکتوری نیست</td></tr>`}
+function renderProducts(){const rows=[...(db.products||[])];$("#prodBody").innerHTML=rows.length?rows.map(p=>`<tr><td><b>${p.name||""}</b></td><td class="muted" dir="ltr">${p.productCode||""}</td><td>${toFa(p.stock)}</td><td>${toman(p.salePrice)}</td></tr>`).join(""):`<tr><td colspan="4" class="empty">کالایی نیست</td></tr>`}
+function loadDemo(){db={settings:{storeName:"فروشگاه نمونه",storeId:"DEMO01"},products:[{id:1,productCode:"P-1",name:"شیر",purchasePrice:20000,salePrice:35000,stock:20},{id:2,productCode:"P-2",name:"نان",purchasePrice:5000,salePrice:10000,stock:40}],sales:[]};const now=Date.now();for(let i=0;i<10;i++){db.sales.push({id:now+i,docNumber:"SAL-"+String(i+1).padStart(6,"0"),customerName:i%2?"علی":"مشتری حضوری",total:50000+i*12000,status:"COMPLETED",createdAt:new Date(now-i*864e5).toISOString(),items:[{productId:1,qty:1+i%3,code:"P-1"}]})}localStorage.setItem("store-dashboard-db",JSON.stringify(db));renderAll()}
+async function pullCloud(){const pantry=($("#pantryId").value||localStorage.getItem("pantryId")||"").trim();const storeId=($("#storeId").value||localStorage.getItem("storeId")||"").trim().toUpperCase();if(!pantry||!storeId){alert("Pantry ID و کد فروشگاه را وارد کنید");return}localStorage.setItem("pantryId",pantry);localStorage.setItem("storeId",storeId);const base=`https://getpantry.cloud/apiv1/pantry/${encodeURIComponent(pantry)}/basket/`;try{const catRes=await fetch(base+encodeURIComponent("store_"+storeId+"_catalog"));const salesRes=await fetch(base+encodeURIComponent("store_"+storeId+"_sales"));let products=[],settings={storeName:"فروشگاه",storeId};if(catRes.ok){const cat=await catRes.json();if(Array.isArray(cat.products))products=cat.products;if(cat.settings)settings={...settings,...cat.settings,storeId}}let sales=[];if(salesRes.ok){const pack=await salesRes.json();if(Array.isArray(pack.sales))sales=pack.sales}if(!products.length&&!sales.length){alert("داده‌ای در ابر پیدا نشد");return}db={settings,products,sales};localStorage.setItem("store-dashboard-db",JSON.stringify(db));renderAll();alert("داده از ابر بارگذاری شد")}catch(e){alert("خطا: "+(e.message||e))}}
+document.querySelectorAll(".tab").forEach(t=>{t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));t.classList.add("active");$("#panel-"+t.dataset.tab).classList.add("active")}});
+$("#file").onchange=async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;try{db=JSON.parse(await f.text());if(!db.products&&!db.sales)throw 0;localStorage.setItem("store-dashboard-db",JSON.stringify(db));renderAll()}catch{alert("فایل نامعتبر")}};
+$("#btnDemo").onclick=loadDemo;$("#btnCloud").onclick=pullCloud;$("#saveSetup").onclick=pullCloud;$("#saleQ").oninput=()=>{if(db)renderSales()};
+try{const raw=localStorage.getItem("store-dashboard-db");if(raw){db=JSON.parse(raw);renderAll()}$("#pantryId").value=localStorage.getItem("pantryId")||"";$("#storeId").value=localStorage.getItem("storeId")||""}catch{}
+if(!db)$("#stats").innerHTML=`<div class="card empty" style="grid-column:1/-1">JSON پشتیبان را بارگذاری کنید یا داده نمونه را بزنید</div>`;
+</script>
+</body>
+</html>
